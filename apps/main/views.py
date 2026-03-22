@@ -38,7 +38,7 @@ class PostListCreateView(generics.ListCreateAPIView):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
     filterset_fields = ['category', 'author', 'status']
     search_fields = ['title', 'content']
-    ordering_fields = ['created_at', 'updated_at', 'view_count', 'title']
+    ordering_fields = ['created_at', 'updated_at', 'views_count', 'title']
     ordering = ['-created_at']
 
     def get_queryset(self):
@@ -79,14 +79,14 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
-class MyPostsViews(generics.ListCreateAPIView):
+class MyPostsView(generics.ListCreateAPIView):
     '''API endpoint для постов текущего пользователя'''
     serializer_class = PostListSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
     filterset_fields = ['category', 'status']
     search_fields = ['title', 'content']
-    ordering_fields = ['created_at', 'updated_at', 'view_count', 'title']
+    ordering_fields = ['created_at', 'updated_at', 'views_count', 'title']
     ordering = ['-created_at']
 
     def get_queryset(self):

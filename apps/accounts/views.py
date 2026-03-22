@@ -53,7 +53,7 @@ class LoginView(generics.GenericAPIView):
             'message': 'User login successfully!'
         }, status=status.HTTP_200_OK)
 
-class ProfileView(generics.RetrieveAPIView):
+class ProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -86,7 +86,7 @@ class ChangePasswordView(generics.UpdateAPIView):
 def logout_view(request):
     '''Выход пользователя'''
     try:
-        refresh_token = RefreshToken.data.get('refresh_token')
+        refresh_token = request.data.get('refresh_token')
         if refresh_token:
             token = RefreshToken(refresh_token)
             token.blacklist()
